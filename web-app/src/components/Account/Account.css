@@ -1,0 +1,68 @@
+.account-management-container{
+  width: 100%;
+  margin-top: 80px;
+}
+
+.account-feature {
+  padding: 20px;
+  border-bottom: 1px solid rgb(184, 184, 184);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.account-feature img {
+  width: 16px;
+}
+
+.account-feater-container {
+  margin-top: 10px;
+  list-style: none;
+}
+
+
+.userinfo-item {
+  padding: 10px 0px;
+}
+
+.userinfo-container,
+.contact-container,
+.helpcenter-container,
+.change-password-container {
+  position: fixed;
+  top: 2%;
+  left: 2%;
+  z-index: 800;
+  border-radius: 10px;
+  background-color: white;
+  width: 96%;
+  height: 96%;
+  padding: 20px;
+  box-sizing: border-box;
+  box-shadow: 0 4px 8px gray;
+}
+
+.contact-content {
+  margin-top: 50px;
+  padding: 50px;
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  align-items: flex-end;
+}
+
+.contact-content a img {
+  width: 40px;
+}
+
+.change-password-container form {
+  margin-top: 50px;
+  /* background-color: green; */
+  max-width: 336px;
+  box-sizing: border-box;
+  padding: 10px 24px;
+}
+
+.change-password-btn:active {
+  background-color: rgb(226, 225, 225);
+}

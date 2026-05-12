@@ -1,0 +1,78 @@
+.blue-btn,
+.register-btn {
+  user-select: none;
+  margin-top: 20px;
+  margin-bottom: 30px;
+  width: 200px;
+  height: 50px;
+  color: var(--main-color);
+  border: 1px solid var(--main-color);
+  border-radius: 10px;
+  margin-left: calc(50% - 100px);
+  outline: none;
+}
+
+
+.blue-btn:active {
+  background-color: var(--main-color);
+  transition: all 0.6s ease;
+}
+
+.exit-popup-btn,
+.exit-otp-verify-btn,
+.logout-btn {
+  width: 200px;
+  height: 40px;
+  color: var(--cancel-color);
+  margin-top: 50px;
+  border: 1px solid var(--cancel-color);
+  border-radius: 10px;
+  margin-left: calc(50% - 100px);
+}
+
+.exit-otp-verify-btn {
+  width: 100px;
+  margin: 0px;
+}
+
+.exit-popup-btn:active,
+.exit-otp-verify-btn:active,
+.logout-btn:active,
+.cancel-btn:active {
+  background-color: var(--cancel-color);
+  transition: all 0.6s ease;
+}
+
+.submit-otp-verify-btn {
+  width: 100px;
+  height: 40px;
+  color: var(--success-color);
+  border: 1px solid var(--success-color);
+  border-radius: 10px;
+  margin-left: calc(50% - 100px);
+}
+
+.submit-btn-small {
+  width: 100px;
+}
+
+.submit-otp-verify-btn:active,
+.confirm-btn:active {
+  background-color: var(--success-color);
+  transition: all 0.6s ease;
+}
+
+.confirm-btn,
+.cancel-btn {
+  height: 40px;
+  color: var(--cancel-color);
+  margin-top: 50px;
+  border: 1px solid var(--cancel-color);
+  border-radius: 10px;
+  width: 100px;
+}
+
+.confirm-btn {
+  color: var(--success-color);
+  border: 1px solid var(--success-color);
+}
