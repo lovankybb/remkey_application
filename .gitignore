@@ -70,6 +70,5 @@ web-app/*.sln
 web-app/*.sw?
 
 #config
-web-app/src/service/FireBaseService.js
 web-app/.env
 web-app/public/firebase-messaging-sw.js

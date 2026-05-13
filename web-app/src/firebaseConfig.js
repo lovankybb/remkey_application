@@ -5,13 +5,13 @@ import { sendNotificationTokenToServer } from "./service/FireBaseService";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
-const API_KEY = import.meta.env.API_KEY;
-const AUTH_DOMAIN = import.meta.env.AUTH_DOMAIN;
-const PROJECT_ID = import.meta.env.PROJECT_ID;
-const STORAGE_BUCKET = import.meta.env.STORAGE_BUCKET;
-const MESSAGING_SENDER_ID = import.meta.env.MESSAGING_SENDER_ID;
-const APP_ID = import.meta.env.APP_ID;
-const MEASUREMENT_ID = import.meta.env.MEASUREMENT_ID;
+const API_KEY = import.meta.env.VITE_API_KEY;
+const AUTH_DOMAIN = import.meta.env.VITE_AUTH_DOMAIN;
+const PROJECT_ID = import.meta.env.VITE_PROJECT_ID;
+const STORAGE_BUCKET = import.meta.env.VITE_STORAGE_BUCKET;
+const MESSAGING_SENDER_ID = import.meta.env.VITE_MESSAGING_SENDER_ID;
+const APP_ID = import.meta.env.VITE_APP_ID;
+const MEASUREMENT_ID = import.meta.env.VITE_MEASUREMENT_ID;
 
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
