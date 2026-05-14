@@ -54,6 +54,7 @@ public enum ErrorCode {
   FILE_NOT_FOUND(1033L, "Cannot find file in storage", HttpStatus.INTERNAL_SERVER_ERROR),
   CARD_IMAGE_NOT_EXIST(1033L, "Card image does not exist", HttpStatus.BAD_REQUEST),
   REPORT_NOT_EXIST(1034L, "Report does not exist", HttpStatus.BAD_REQUEST),
+  CLOUDINARY_ERROR(1035L, "There is some problem with cloudinary.", HttpStatus.INTERNAL_SERVER_ERROR),
 
   UNCATEGORIZED_EXCEPTION(9999L, "Uncategorized exception", HttpStatus.INTERNAL_SERVER_ERROR);
 

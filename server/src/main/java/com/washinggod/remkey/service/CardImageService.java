@@ -1,5 +1,7 @@
 package com.washinggod.remkey.service;
 
+import com.washinggod.remkey.dto.request.UpdateCardUserImageRequest;
+import com.washinggod.remkey.dto.request.UploadImageRequest;
 import com.washinggod.remkey.dto.response.CardImageResponse;
 import com.washinggod.remkey.entity.Card;
 import com.washinggod.remkey.entity.CardImage;
@@ -13,7 +15,11 @@ import com.washinggod.remkey.repository.CardRepository;
 import com.washinggod.remkey.repository.CardUserRepository;
 import com.washinggod.remkey.util.StorageFiles;
 import jakarta.transaction.Transactional;
+
+import java.util.Map;
 import java.util.Objects;
+import java.util.Optional;
+
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -36,20 +42,27 @@ public class CardImageService {
 
   CardImageMapper cardImageMapper;
 
-  StorageFiles storageFiles;
+  CloudinaryService cloudinaryService;
 
   RedisTemplate<String, String> redisTemplate;
 
   @Transactional
-  public CardImageResponse create(MultipartFile file, Long cardId) {
+  public CardImageResponse create(Long cardId, UploadImageRequest request) {
+
+
+    log.info("+++====== cardId: {}", cardId);
+    log.info("secure_url: {}", request.getUrl());
+    log.info("public_id: {}", request.getPublicId());
 
     Card card = this.getCardById(cardId);
 
-    String url = storageFiles.storageFile(file, FileType.IMAGE);
 
-    CardImage originCardImage = CardImage.builder().url(url).card(card).build();
+    CardImage originCardImage = CardImage.builder()
+            .url(request.getUrl())
+            .publicId(request.getPublicId())
+            .card(card).build();
 
-    originCardImage = cardImageRepository.save(originCardImage);
+    cardImageRepository.save(originCardImage);
 
     //    Get user's card id from redis that was saved in method create of file CardService
     String cardUserKey = "cardUser:" + cardId + ":id:";
@@ -57,15 +70,19 @@ public class CardImageService {
       Long cardUserId = Long.valueOf(redisTemplate.opsForValue().get(cardUserKey));
 
       CardUser cardUser = this.getCardUserById(cardUserId);
-      String newUrl = storageFiles.duplicateFile(url, FileType.IMAGE);
 
-      CardImage cardUserImage = CardImage.builder().url(newUrl).cardUser(cardUser).build();
+      log.info("do duplicate with cardUserId: {}", cardUserId);
+      Map<String, String> cardUserImageResp  = this.cloudinaryService.duplicateImage(request.getUrl(), request.getPublicId());
+      log.info("duplicate successfully!");
+      CardImage cardUserImage = CardImage.builder().url(cardUserImageResp.get("secure_url"))
+              .publicId(cardUserImageResp.get("public_id"))
+              .cardUser(cardUser).build();
 
       cardImageRepository.save(cardUserImage);
 
       redisTemplate.delete(cardUserKey);
     } catch (Exception e) {
-      log.error("ERROR: There's no user's card with key: {}", cardUserKey);
+      e.printStackTrace();
       throw new AppException(ErrorCode.UNCATEGORIZED_EXCEPTION);
     }
 
@@ -88,17 +105,27 @@ public class CardImageService {
   public CardImageResponse setCardUserImage(Long imageId, Long cardUserId) {
 
     CardImage originCardImage = this.getCardImageById(imageId);
-    String newUrl = storageFiles.duplicateFile(originCardImage.getUrl(), FileType.IMAGE);
+    Map<String, String> newImage = cloudinaryService.duplicateImage(originCardImage.getUrl(), originCardImage.getPublicId());
 
     CardUser cardUser = this.getCardUserById(cardUserId);
 
-    CardImage cardImage = CardImage.builder().url(newUrl).cardUser(cardUser).build();
+    CardImage cardImage = CardImage.builder().url(newImage.get("secure_url"))
+            .publicId(newImage.get("public_id"))
+            .cardUser(cardUser).build();
 
     return this.generateCardImageResponse(cardImageRepository.save(cardImage));
   }
 
-  public CardImageResponse updateImageForCardUser() {
-    return null;
+  public CardImageResponse updateCardUserImage(Long imageId, UpdateCardUserImageRequest request) {
+
+    CardImage image = this.getCardImageById(imageId);
+
+    cloudinaryService.delete(image.getPublicId());
+
+    image.setUrl(request.getUrl());
+    image.setPublicId(request.getPublicId());
+
+    return this.generateCardImageResponse(cardImageRepository.save(image));
   }
 
   private CardImage getCardImageById(Long id) {

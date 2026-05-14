@@ -32,6 +32,7 @@
 		<spotless.version>3.4.0</spotless.version>
 		<bucket4j.version>8.10.1</bucket4j.version>
         <google-firebase.version>9.2.0</google-firebase.version>
+		<cloudinary.version>1.36.0</cloudinary.version>
 	</properties>
 	<dependencies>
 
@@ -104,6 +105,7 @@
 			<artifactId>mapstruct</artifactId>
 			<version>${mapstruct.version}</version>
 		</dependency>
+
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
@@ -114,11 +116,21 @@
 			<artifactId>spring-security-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+
+<!--		google firebase for notification-->
         <dependency>
             <groupId>com.google.firebase</groupId>
             <artifactId>firebase-admin</artifactId>
             <version>${google-firebase.version}</version>
         </dependency>
+
+
+<!--		cloudinary-->
+		<dependency>
+			<groupId>com.cloudinary</groupId>
+			<artifactId>cloudinary-http44</artifactId>
+			<version>${cloudinary.version}</version>
+		</dependency>
 
 	</dependencies>
 

@@ -57,7 +57,8 @@ async function deleteCardUser(id) {
   }
 }
 
-async function editCardUser({ id, question, answer, languageId, topicId }) {
+async function updateCardUser(id, question, answer, languageId, topicId) {
+  console.log("card-user-id", id);
   const url = `${BASE_URL}/api/v1/remkey/my-cards/${id}`;
   const jwtToken = localStorage.getItem("jwtToken");
 
@@ -127,11 +128,35 @@ async function addCardToMyList(cardId) {
   }
 }
 
+async function updateCardUserImage(imageId, newUrl, newPublicId) {
+  const url = `${BASE_URL}/api/v1/remkey/my-cards/upload/${imageId}/update-image`;
+  const jwtToken = localStorage.getItem("jwtToken");
+
+  try {
+    const response = await fetch(url, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${jwtToken}`,
+      },
+      body: JSON.stringify({
+        url: newUrl,
+        publicId: newPublicId,
+      }),
+    });
+
+    return await response.json();
+  } catch (err) {
+    console.log(err);
+  }
+}
+
 export {
   getAllCardUsers,
   getAllMyStudyCards,
   deleteCardUser,
-  editCardUser,
+  updateCardUser,
   updateNextReviewTime,
   addCardToMyList,
+  updateCardUserImage,
 };

@@ -50,8 +50,6 @@ public class CardService {
 
   CardImageRepository cardImageRepository;
 
-  StorageFiles storageFiles;
-
 
   //    Get 10 item at first page
   Pageable pageable = PageRequest.of(0, 10);
@@ -79,9 +77,12 @@ public class CardService {
 
     //        Save this value to get CardUser when uploading image in the future  "cardUser:id:"
     String cardUserKey = "cardUser:" + card.getId() + ":id:";
+
     redisTemplate
         .opsForValue()
         .set(cardUserKey, cardUser.getId().toString(), Duration.ofMinutes(5));
+
+    System.out.println("Save cardUser:"+card.getId()+":id:"+cardUser.getId()+ " successfully!");
 
     return this.generateCardResponse(card);
   }

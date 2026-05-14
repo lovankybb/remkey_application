@@ -20,6 +20,9 @@ public class CardImage {
 
   String url;
 
+  @Column(name = "public_id")
+  String publicId;
+
   @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
   @JoinColumn(name = "card_id")
   Card card;
