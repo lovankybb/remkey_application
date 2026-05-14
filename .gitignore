@@ -1,13 +1,14 @@
 
 #### SERVER #####
 /server/HELP.md
-/server/src/main/resources/application.yaml
 /server/target/
 /target/
 /server/.mvn/wrapper/maven-wrapper.jar
 /server/src/main/**/target/
 remkey-001-firebase-adminsdk-fbsvc-bc498b2749.json
 /server/src/test/**/target/
+/server/.env
+/server/Dockerfile
 
 ### STS ###
 /server/.apt_generated

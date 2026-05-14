@@ -150,7 +150,7 @@ export default function ReportDetail({
             </p>
           </section>
           <div className="card-in-report">
-            <img src={defaultImage} />
+            <img src={ card.mainImage ? card.mainImage.url : defaultImage} />
             <h3>{card.question}</h3>
             <br />
             <p>{card.answer}</p>

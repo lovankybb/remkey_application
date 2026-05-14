@@ -37,7 +37,7 @@ public class CardReportService {
 
     CardRepository cardRepository;
 
-    StorageFiles storageFiles;
+    CloudinaryService cloudinaryService;
 
     public List<CardReportResponse> getAll() {
 
@@ -62,10 +62,8 @@ public class CardReportService {
         Optional<Card> cardOptional = cardRepository.findById(cardReport.getCardId());
         cardOptional.ifPresent(card -> {
 
-            if(card.getCardImages().isEmpty())log.info("cardImage is Empty =============");
             card.getCardImages().forEach(image -> {
-                log.info("Image: === {}", image.getUrl());
-                storageFiles.deleteFile(image.getUrl(), FileType.IMAGE);
+                cloudinaryService.delete(image.getPublicId());
             });
             cardRepository.delete(card);
         });

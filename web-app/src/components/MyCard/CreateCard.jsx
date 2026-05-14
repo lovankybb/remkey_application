@@ -7,8 +7,9 @@ import DisableLayerMedium from "../Popup/DisableLayerMedium";
 import ErrorPopup from "../Popup/ErrorPopup";
 import SelectionPopup from "./SelectionPopup";
 import UploadImagePopup from "../Popup/UploadImagePopup";
-import { createCard, uploadCardImage } from "../../service/CardSevice";
+import { createCard, updateCardImageNameOnServer } from "../../service/CardSevice";
 import SuccessPopup from "../Popup/SuccessPopup";
+import {uploadImageToCloud} from "../../service/CloudinaryService"
 
 function CreateCard({ exitBtn, isClose }) {
   // Card creation variable
@@ -42,6 +43,7 @@ function CreateCard({ exitBtn, isClose }) {
 
   function closeErrorPopup() {
     setEnableErrorPopup(false);
+    setEnableDisableLayer(false);
   }
 
   function handleShowErrorPopup(message) {
@@ -53,6 +55,7 @@ function CreateCard({ exitBtn, isClose }) {
     setEnableSuccessPopup(true);
     setTimeout(() => {
       setEnableSuccessPopup(false);
+      setEnableDisableLayer(false);
     }, 2600);
   }
 
@@ -127,6 +130,7 @@ function CreateCard({ exitBtn, isClose }) {
   // create
 
   async function handleCreateCard() {
+    setEnableDisableLayer(true); 
     const questionInput = document.querySelector("#question");
     const answerInput = document.querySelector("#answer");
 
@@ -161,7 +165,8 @@ function CreateCard({ exitBtn, isClose }) {
 
     if (data.code === 1000) {
       if (uploadImage !== null) {
-        uploadCardImage(data.body.id, uploadImage);
+        const cloudResp = await uploadImageToCloud(uploadImage);
+        await updateCardImageNameOnServer(data.body.id, cloudResp.secure_url, cloudResp.public_id);
       }
 
       handleShowSuccessPopup();

@@ -145,22 +145,24 @@ async function getNextCardsFromId(cardId) {
   }
 }
 
-async function uploadCardImage(cardId, image) {
+async function updateCardImageNameOnServer(cardId, imageUrl, imagePublicId) {
 
   const url = `${BASE_URL}/api/v1/remkey/cards/${cardId}/upload`;
   const jwtToken = localStorage.getItem("jwtToken");
 
 
-  const formData = new FormData(); 
-  formData.append('file', image); 
-
   try {
     const response = await fetch(url, {
+
       method: "POST",
       headers: {
+        "Content-Type": "application/json",
         Authorization: `Bearer ${jwtToken}`,
       },
-      body: formData
+      body: JSON.stringify({
+        url: imageUrl, 
+        publicId: imagePublicId
+      })
     });
 
     return await response.json();
@@ -177,5 +179,5 @@ export {
   deleteCard,
   getNewestCards,
   getNextCardsFromId,
-  uploadCardImage,
+  updateCardImageNameOnServer,
 };

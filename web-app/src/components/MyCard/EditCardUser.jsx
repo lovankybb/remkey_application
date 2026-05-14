@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { getAllLanguages } from "../../service/LanguageService";
 import { getAllTopics } from "../../service/TopicService";
 import Button from "../Button/Button";
@@ -6,8 +6,11 @@ import ExitHeader from "../Header/ExitHeader";
 import DisableLayerMedium from "../Popup/DisableLayerMedium";
 import ErrorPopup from "../Popup/ErrorPopup";
 import SelectionPopup from "./SelectionPopup";
-import UploadImagePopup from "../Popup/UploadImagePopup";
-import { updateCard } from "../../service/CardSevice";
+import { uploadImageToCloud } from "../../service/CloudinaryService";
+import {
+  updateCardUser,
+  updateCardUserImage,
+} from "../../service/CardUserService";
 import SuccessPopup from "../Popup/SuccessPopup";
 import { getTopicByName } from "../../service/TopicService";
 import { getLanguageByName } from "../../service/LanguageService";
@@ -40,7 +43,9 @@ function EditCard({
   const [enableSelectLanguageTab, setEnableSelectLanguageTab] = useState(false);
   const [languageName, setLanguageName] = useState("Chọn ngôn ngữ");
 
-  const [enableUploadImageTab, setEnableUploadImageTab] = useState(false);
+  const [imageName, setImageName] = useState("Cập nhật ảnh mới");
+  const imageInpuRef = useRef(null);
+  const [uploadImage, setUploadImage] = useState(null);
 
   const [enableErrorPopup, setEnableErrorPopup] = useState(false);
   const [errMessage, setErrMessage] = useState("");
@@ -53,6 +58,7 @@ function EditCard({
 
   function closeErrorPopup() {
     setEnableErrorPopup(false);
+    setEnableDisableLayer(false);
   }
 
   function handleShowErrorPopup(message) {
@@ -64,6 +70,7 @@ function EditCard({
     setEnableSuccessPopup(true);
     setTimeout(() => {
       setEnableSuccessPopup(false);
+      setEnableDisableLayer(false);
     }, 2600);
   }
 
@@ -126,31 +133,29 @@ function EditCard({
 
   // illustrative image
 
-  function openUploadImageTab() {
-    setEnableDisableLayer(true);
-    setEnableUploadImageTab(true);
-  }
+  const openSelectImage = () => {
+    imageInpuRef.current.click();
+  };
 
-  function closeUploadImageTab() {
-    setIsCloseTab(true);
-    setTimeout(() => {
-      setEnableDisableLayer(false);
-      setEnableUploadImageTab(false);
-      setIsCloseTab(false);
-    }, 200);
-  }
-
-  function handleUploadIlluImage() {
-    closeUploadImageTab();
-    const message = "Tính năng đang được phát triển";
-    handleShowErrorPopup(message);
-  }
+  const handleSetImage = (event) => {
+    const image = event.target.files[0];
+    console.log("files", image);
+    setImageName(image.name);
+    setUploadImage(image);
+  };
 
   // edit
 
   async function handleEditCard() {
+    setEnableDisableLayer(true);
 
-    const data = await updateCard(id, question, answer, languageId, topicId);
+    const data = await updateCardUser(
+      id,
+      question,
+      answer,
+      languageId,
+      topicId,
+    );
 
     if (data.code === 1000) {
       const newCard = data.body;
@@ -163,6 +168,16 @@ function EditCard({
           return card;
         }),
       );
+
+      if (uploadImage) {
+        const cloudRes = await uploadImageToCloud(uploadImage);
+
+        const imageId = newCard.mainImage.id;
+        const newUrl = cloudRes.secure_url;
+        const publicId = cloudRes.public_id;
+
+        await updateCardUserImage(imageId, newUrl, publicId);
+      }
 
       handleShowSuccessPopup();
     } else {
@@ -214,9 +229,15 @@ function EditCard({
             </p>
           </div>
           <div>
-            <p className="open-selection-btn" onClick={openUploadImageTab}>
-              Sửa ảnh minh họa
+            <p className="open-selection-btn" onClick={openSelectImage}>
+              {imageName}
             </p>
+            <input
+              onChange={handleSetImage}
+              ref={imageInpuRef}
+              type="file"
+              style={{ display: "none" }}
+            />
           </div>
           <textarea
             className="card-part"
@@ -261,13 +282,6 @@ function EditCard({
           title={"Error"}
           message={errMessage}
           onClick={closeErrorPopup}
-        />
-      )}
-      {enableUploadImageTab && (
-        <UploadImagePopup
-          closeTab={closeUploadImageTab}
-          isClose={isCloseTab}
-          confirm={handleUploadIlluImage}
         />
       )}
 

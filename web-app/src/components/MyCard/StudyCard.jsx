@@ -29,7 +29,7 @@ const FlipCard = ({ question, answer, image, language }) => {
             <img
               src={
                 image
-                  ? BASE_URL + "/api/v1/remkey/files/images/" + image.url
+                  ? image.url
                   : defaultImg
               }
             />

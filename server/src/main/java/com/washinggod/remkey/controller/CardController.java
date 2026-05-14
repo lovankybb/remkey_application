@@ -108,10 +108,9 @@ public class CardController {
   }
 
   @PostMapping("/{id}/upload")
-  public ApiResponse<CardImageResponse> uploadIllustrativeImage(
-      @PathVariable("id") Long id, @RequestParam("file") MultipartFile file) {
+  public ApiResponse<CardImageResponse> uploadIllustrativeImage(@PathVariable Long id,@RequestBody UploadImageRequest request) {
     ApiResponse<CardImageResponse> apiResponse = new ApiResponse<>();
-    CardImageResponse imageResponse = cardImageService.create(file, id);
+    CardImageResponse imageResponse = cardImageService.create(id, request);
     apiResponse.setBody(imageResponse);
     return apiResponse;
   }

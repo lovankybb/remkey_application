@@ -111,8 +111,8 @@ export default function OriginCard({
         <img
           className="illustrate-img "
           src={
-            mainImage
-              ? BASE_URL + "/api/v1/remkey/files/images/" + mainImage.url
+              mainImage
+              ? mainImage.url
               : defaultImg
           }
           alt="Ảnh minh họa"

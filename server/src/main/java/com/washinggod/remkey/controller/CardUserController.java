@@ -3,6 +3,7 @@ package com.washinggod.remkey.controller;
 import com.washinggod.remkey.dto.request.AddToMyListRequest;
 import com.washinggod.remkey.dto.request.CardUserUpdateRequest;
 import com.washinggod.remkey.dto.request.HandleCardAfterStudyRequest;
+import com.washinggod.remkey.dto.request.UpdateCardUserImageRequest;
 import com.washinggod.remkey.dto.response.ApiResponse;
 import com.washinggod.remkey.dto.response.CardImageResponse;
 import com.washinggod.remkey.dto.response.CardUserResponse;
@@ -90,4 +91,13 @@ public class CardUserController {
     return apiResponse;
   }
 
+
+  @PutMapping("/upload/{imageId}/update-image")
+  public ApiResponse<CardImageResponse> updateCardUserImage(
+          @PathVariable("imageId") Long imageId, @RequestBody UpdateCardUserImageRequest request) {
+    ApiResponse<CardImageResponse> apiResponse = new ApiResponse<>();
+    apiResponse.setBody(cardImageService.updateCardUserImage(imageId, request));
+    return apiResponse;
+  }
 }
+

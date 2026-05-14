@@ -49,7 +49,7 @@ public class CardUserService {
 
   CardImageService cardImageService;
 
-  StorageFiles storageFiles;
+  CloudinaryService cloudinaryService;
 
 
   public CardUser initCardForUser(InitCardForUserRequest request) {
@@ -138,7 +138,7 @@ public class CardUserService {
     Optional<CardUser> cardUserOptional = cardUserRepository.findById(id);
     cardUserOptional.ifPresent(cardUser -> {
       cardUser.getImages().forEach(image -> {
-        storageFiles.deleteFile(image.getUrl(), FileType.IMAGE);
+        cloudinaryService.delete(image.getPublicId());
       });
 
       cardUserRepository.delete(cardUser);
