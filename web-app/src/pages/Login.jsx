@@ -4,6 +4,9 @@ import DisableLayer from "../components/Popup/DisableLayer.jsx";
 import { useEffect, useState } from "react";
 import login from "../service/LoginService.js";
 import ErrorPopup from "../components/Popup/ErrorPopup.jsx";
+import backgroundImage from "../assets/login-background.jpg"
+import logo from "../assets/logo.png"
+import { Link } from "react-router-dom";
 
 export default function Login() {
   const [isDisableLayer, setDisableLayer] = useState(false);
@@ -13,7 +16,7 @@ export default function Login() {
 
   useEffect(() => {
     document.body.style.backgroundImage =
-      "url('src/assets/login-background.jpg')";
+      `url(${backgroundImage})`;
 
     document.title = "Đăng nhập";
     return () => {
@@ -49,7 +52,7 @@ export default function Login() {
   return (
     <>
       <div className="form-container">
-        <img className="logo-inform" src="/src/assets/logo.png" alt="" />
+        <img className="logo-inform" src={logo} alt="" />
         <form className="login-form" onSubmit={handleSubmit}>
           <FormInput
             className="text-input"
@@ -70,7 +73,7 @@ export default function Login() {
           ></Button>
         </form>
         <div>
-          <a href="./register">Đăng ký tài khoản</a>
+          <Link to="/register">Đăng ký tài khoản</Link>
         </div>
       </div>
       {isDisableLayer && <DisableLayer />}

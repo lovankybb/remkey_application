@@ -23,6 +23,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -70,7 +71,6 @@ public class CardUserService {
     return this.saveCardUser(cardUser);
   }
 
-  @PreAuthorize("#id == authentication.name || hasRole('ADMIN')")
   public CardUserResponse handleCardAfterStudy(HandleCardAfterStudyRequest request) {
 
     CardUser cardUser = this.getCardUserById(request.getCardUserId());
@@ -98,7 +98,7 @@ public class CardUserService {
     return this.generateCardUserResponse(this.saveCardUser(cardUser));
   }
 
-  @PreAuthorize("#id == authentication.name || hasRole('ADMIN')")
+
   public CardUserResponse addToMyList(AddToMyListRequest request) {
 
     String userId = this.getCurrentUserId();
@@ -117,7 +117,6 @@ public class CardUserService {
     return this.generateCardUserResponse(cardUser);
   }
 
-  @PreAuthorize("#id == authentication.name || hasRole('ADMIN')")
   public CardUserResponse update(Long id, CardUserUpdateRequest request) {
 
     CardUser cardUser = this.getCardUserById(id);
@@ -133,7 +132,7 @@ public class CardUserService {
     return this.generateCardUserResponse(this.saveCardUser(cardUser));
   }
 
-  @PreAuthorize("#id == authentication.name || hasRole('ADMIN')")
+
   public void delete(Long id) {
     Optional<CardUser> cardUserOptional = cardUserRepository.findById(id);
     cardUserOptional.ifPresent(cardUser -> {
@@ -145,7 +144,6 @@ public class CardUserService {
     });
   }
 
-  @PreAuthorize("#id == authentication.name || hasRole('ADMIN')")
   public List<CardUserResponse> getAllMyStudyCardsNow() {
 
     String userId = this.getCurrentUserId();
@@ -154,7 +152,6 @@ public class CardUserService {
         .toList();
   }
 
-  @PreAuthorize("#id == authentication.name || hasRole('ADMIN')")
   public List<CardUserResponse> getAllMyCards() {
 
     String userId = this.getCurrentUserId();
@@ -194,6 +191,7 @@ public class CardUserService {
     return cardUserResponse;
   }
 
+  @PostAuthorize("returnObject.userId == authentication.name")
   private CardUser getCardUserById(Long id) {
     return cardUserRepository
         .findById(id)

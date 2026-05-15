@@ -9,12 +9,7 @@ spring:
     driver-class-name: org.postgresql.Driver
   data:
     redis:
-      host: ${REDIS_HOST}
-      port: ${REDIS_PORT}
-      lettuce:
-        pool:
-          max-active: 8
-      password: ${REDIS_PASSWORD}
+      url: ${REDIS_URL}
 
 
   #      config jpa for postgres
@@ -32,18 +27,14 @@ spring:
     baseline-on-migrate: true
 
 
-  mail:
-    host: smtp.gmail.com
-    port: 587
-    username: ${MAIL_USERNAME}
-    password: ${MAIL_PASSWORD}
-    properties:
-      mail:
-        smtp:
-          auth: true
-          starttls:
-            enable: true
-            required: true
+resend:
+  api-key: ${RESEND_API_KEY}
+
+
+server:
+  port: 8080
+  servlet:
+    context-path: /api/v1/remkey
 
 
 #Json web token
@@ -68,17 +59,12 @@ app:
       refreshable:  1 #minutes
       request-limit: 5 #times per day
     cors:
-      endpoint:
+      endpoint: ${FRONT_END_ADDRESS}
     rate-limit:
       capacity: 50 #times per minute
       refill: 50 #times per minute
 
 
-
-server:
-  servlet:
-    context-path: /api/v1/remkey
-    port: 8080
 
 
 

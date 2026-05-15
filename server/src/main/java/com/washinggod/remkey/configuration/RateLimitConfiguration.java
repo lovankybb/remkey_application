@@ -10,6 +10,8 @@ import io.lettuce.core.codec.ByteArrayCodec;
 import io.lettuce.core.codec.RedisCodec;
 import io.lettuce.core.codec.StringCodec;
 import java.time.Duration;
+
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.data.redis.RedisProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -17,15 +19,12 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class RateLimitConfiguration {
 
+
+
   //    create redis client to connect application to Redis
   @Bean
   public RedisClient redisClient(RedisProperties redisProperties) {
-
-    return RedisClient.create(
-        RedisURI.builder()
-            .withHost(redisProperties.getHost())
-            .withPort(redisProperties.getPort())
-            .build());
+    return RedisClient.create(redisProperties.getUrl());
   }
 
   /*

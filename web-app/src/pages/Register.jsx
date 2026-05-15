@@ -7,6 +7,9 @@ import OtpVerifyPopup from "../components/Popup/OtpVerifyPopup.jsx";
 import register from "../service/RegisterService.js";
 import verifyUserCreation from "../service/VerifyUserCreation.js";
 import SuccessPopup from "../components/Popup/SuccessPopup.jsx";
+import backgroundImage from "../assets/login-background.jpg"
+import logo from "../assets/logo.png"
+import { Link } from "react-router-dom";
 
 export default function Register() {
   const [isDisableLayer, setDisableLayer] = useState(false);
@@ -18,7 +21,7 @@ export default function Register() {
   useEffect(() => {
     document.title="Đăng ký tài khoản"; 
     document.body.style.backgroundImage =
-      "url('src/assets/login-background.jpg')";
+      `url(${backgroundImage})`;
     return () => {
       document.body.style.backgroundImage = "";
       document.title=""; 
@@ -77,7 +80,7 @@ export default function Register() {
   return (
     <>
       <div className="form-container" id="register-form-container">
-        <img className="logo-inform" src="/src/assets/logo.png" alt="" />
+        <img className="logo-inform" src={logo} alt="" />
         <form className="register-form" onSubmit={handleSubmit}>
           <FormInput
             className="text-input"
@@ -104,7 +107,7 @@ export default function Register() {
           />
         </form>
         <div>
-          <a href="./login">Đăng nhập</a>
+          <Link to="/login">Đăng nhập</Link>
         </div>
       </div>
       {isDisableLayer && <DisableLayer />}

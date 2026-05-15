@@ -3,9 +3,6 @@ package com.washinggod.remkey.util;
 import com.washinggod.remkey.configuration.properties.OtpConfig;
 import com.washinggod.remkey.exception.AppException;
 import com.washinggod.remkey.exception.ErrorCode;
-import jakarta.mail.MessagingException;
-import java.time.Duration;
-import java.util.Objects;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -13,6 +10,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.time.Duration;
+import java.util.Objects;
 
 @Slf4j
 @Service
@@ -32,7 +32,7 @@ public class OtpService {
 
   final int DEFAULT_MAGNITUDE = 1000000;
 
-  public void generateOtpCode(String email) throws MessagingException {
+  public void generateOtpCode(String email) {
 
     String otp = String.format(DEFAULT_FORMAT_OTP, (int) (Math.random() * DEFAULT_MAGNITUDE));
 
@@ -148,7 +148,7 @@ public class OtpService {
                 </html>
                 """;
     String text =
-        html.replace("OTP", otp).replace("TIME", String.valueOf(otpConfig.getRefreshable()));
+        html.replace("OTP", otp).replace("TIME", String.valueOf(otpConfig.getValidDuration()));
 
     mailService.sendEmail(email, subject, text);
   }

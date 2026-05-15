@@ -11,12 +11,6 @@ import com.washinggod.remkey.mapper.UserMapper;
 import com.washinggod.remkey.repository.RoleRepository;
 import com.washinggod.remkey.repository.UserRepository;
 import com.washinggod.remkey.util.OtpService;
-import jakarta.mail.MessagingException;
-import java.time.Duration;
-import java.time.LocalDateTime;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -28,6 +22,12 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.time.Duration;
+import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 @Slf4j
 @Service
@@ -66,11 +66,7 @@ public class UserService {
     redisTemplate
         .opsForValue()
         .set(passwordKey, request.getPassword(), Duration.ofMinutes(otpConfig.getValidDuration()));
-    try {
       otpService.generateOtpCode(request.getEmail());
-    } catch (MessagingException e) {
-      log.error("ERROR: Failed in sending verify email");
-    }
   }
 
   public UserResponse verifyUserCreationRequest(VerifyUserCreationRequest request) {

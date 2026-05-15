@@ -11,16 +11,16 @@ import com.washinggod.remkey.repository.NotificationTokenRepository;
 import com.washinggod.remkey.repository.UserRepository;
 import com.washinggod.remkey.service.FmcService;
 import com.washinggod.remkey.util.MailService;
-import jakarta.mail.MessagingException;
 import jakarta.transaction.Transactional;
-import java.time.LocalDateTime;
-import java.util.List;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
+
+import java.time.LocalDateTime;
+import java.util.List;
 
 @Slf4j
 @Component
@@ -42,7 +42,7 @@ public class RemkeyFlashcardBot {
 
   @Scheduled(fixedRate = 600000) // default scheduled time is 600000, it equals 10 minutes
   @Transactional
-  public void scanCardUsers() throws MessagingException {
+  public void scanCardUsers() {
 
     LocalDateTime limitTime = LocalDateTime.now().minusHours(DEFAULT_NOTIFICATION_LIMIT_TIME);
     LocalDateTime now = LocalDateTime.now();
@@ -106,11 +106,8 @@ public class RemkeyFlashcardBot {
   private void sendNotificationEmail(List<CardUser> cardUsers, String receiver) {
     String title = this.getEmailTitle();
     String body = this.getEmailBody(cardUsers);
-    try {
       mailService.sendEmail(receiver, title, body);
-    } catch (MessagingException e) {
-      throw new AppException(ErrorCode.SEND_EMAIL_FAILED);
-    }
+
   }
 
   private String getEmailTitle() {

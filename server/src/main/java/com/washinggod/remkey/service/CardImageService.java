@@ -71,9 +71,7 @@ public class CardImageService {
 
       CardUser cardUser = this.getCardUserById(cardUserId);
 
-      log.info("do duplicate with cardUserId: {}", cardUserId);
       Map<String, String> cardUserImageResp  = this.cloudinaryService.duplicateImage(request.getUrl(), request.getPublicId());
-      log.info("duplicate successfully!");
       CardImage cardUserImage = CardImage.builder().url(cardUserImageResp.get("secure_url"))
               .publicId(cardUserImageResp.get("public_id"))
               .cardUser(cardUser).build();

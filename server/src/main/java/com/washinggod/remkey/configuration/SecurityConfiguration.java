@@ -31,7 +31,7 @@ public class SecurityConfiguration {
     "/users/**", "/auth/**", "/payments/momo-ipn", "/payments/vnpay-ipn", "/files/**"
   };
 
-  @Value("{app.sec.cors.endpoint}")
+  @Value("${app.sec.cors.endpoint}")
   private String corsEndpoint;
 
   /// /  @Autowired
@@ -81,9 +81,9 @@ public class SecurityConfiguration {
   CorsFilter corsFilter() {
 
     CorsConfiguration configuration = new CorsConfiguration();
-    configuration.addAllowedHeader("*");
-    configuration.addAllowedMethod("*");
-    configuration.addAllowedOrigin("*");
+    configuration.addAllowedHeader("*"); // allow header
+    configuration.addAllowedMethod("*"); // allow method
+    configuration.addAllowedOrigin(corsEndpoint); // allow frontend
     UrlBasedCorsConfigurationSource urlBasedCorsConfigurationSource =
         new UrlBasedCorsConfigurationSource();
     urlBasedCorsConfigurationSource.registerCorsConfiguration("/**", configuration);

@@ -33,6 +33,7 @@
 		<bucket4j.version>8.10.1</bucket4j.version>
         <google-firebase.version>9.2.0</google-firebase.version>
 		<cloudinary.version>1.36.0</cloudinary.version>
+		<resend.version>3.1.0</resend.version>
 	</properties>
 	<dependencies>
 
@@ -64,11 +65,14 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-redis</artifactId>
 		</dependency>
+
+
+<!--		<dependency>-->
+<!--			<groupId>org.springframework.boot</groupId>-->
+<!--			<artifactId>spring-boot-starter-mail</artifactId>-->
+<!--		</dependency>-->
 		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-mail</artifactId>
-		</dependency>
-		<dependency>
+
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-oauth2-resource-server</artifactId>
 		</dependency>
@@ -130,6 +134,13 @@
 			<groupId>com.cloudinary</groupId>
 			<artifactId>cloudinary-http44</artifactId>
 			<version>${cloudinary.version}</version>
+		</dependency>
+
+<!--		resend-->
+		<dependency>
+			<groupId>com.resend</groupId>
+			<artifactId>resend-java</artifactId>
+			<version>${resend.version}</version>
 		</dependency>
 
 	</dependencies>

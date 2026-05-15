@@ -1,35 +1,45 @@
 package com.washinggod.remkey.util;
 
-import jakarta.mail.MessagingException;
-import jakarta.mail.internet.MimeMessage;
+import com.resend.Resend;
+import com.resend.core.exception.ResendException;
+import com.resend.services.emails.model.CreateEmailOptions;
+import com.washinggod.remkey.exception.AppException;
+import com.washinggod.remkey.exception.ErrorCode;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 @Slf4j
 @Service
-@RequiredArgsConstructor
-@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class MailService {
 
-  JavaMailSender javaMailSender;
 
-  @Async
-  public void sendEmail(String to, String subject, String text) throws MessagingException {
+    @Value("${resend.api-key}")
+    String apiKey;
 
-    MimeMessage message = javaMailSender.createMimeMessage();
+    @Async
+    public void sendEmail(String to, String subject, String text) {
 
-    MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
-    helper.setTo(to);
-    helper.setSubject(subject);
+        Resend resend = new Resend(apiKey);
 
-    helper.setText(text, true);
+        CreateEmailOptions email = CreateEmailOptions.builder()
+                .from("no-reply@remkey.site")
+                .to(to)
+                .subject(subject)
+                .html(text)
+                .build();
 
-    javaMailSender.send(message);
-  }
+        try {
+            resend.emails().send(email);
+        } catch (ResendException e) {
+            log.error("ERROR: FAILED in sending email to {}", to);
+            throw new AppException(ErrorCode.SEND_EMAIL_FAILED);
+        }
+
+    }
 }
