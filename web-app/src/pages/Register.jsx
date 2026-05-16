@@ -7,8 +7,8 @@ import OtpVerifyPopup from "../components/Popup/OtpVerifyPopup.jsx";
 import register from "../service/RegisterService.js";
 import verifyUserCreation from "../service/VerifyUserCreation.js";
 import SuccessPopup from "../components/Popup/SuccessPopup.jsx";
-import backgroundImage from "../assets/login-background.jpg"
-import logo from "../assets/logo.png"
+import backgroundImage from "../assets/login-background.jpg";
+import logo from "../assets/logo.png";
 import { Link } from "react-router-dom";
 
 export default function Register() {
@@ -18,21 +18,22 @@ export default function Register() {
   const [errMessage, setErrMessage] = useState("");
   const [enableSuccessPopup, setEnableSuccessPopup] = useState(false);
 
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("");
+  const [otpCode, setOtpCode] = useState("");
+
   useEffect(() => {
-    document.title="Đăng ký tài khoản"; 
-    document.body.style.backgroundImage =
-      `url(${backgroundImage})`;
+    document.title = "Đăng ký tài khoản";
+    document.body.style.backgroundImage = `url(${backgroundImage})`;
     return () => {
       document.body.style.backgroundImage = "";
-      document.title=""; 
+      document.title = "";
     };
   });
 
   async function handleRegister() {
     setDisableLayer(true);
-    const username = document.querySelector("#username").value;
-    const password = document.querySelector("#password").value;
-    const email = document.querySelector("#email").value;
 
     const data = await register(username, password, email);
 
@@ -55,8 +56,6 @@ export default function Register() {
 
   async function submitOtp() {
     setEnableOtpVerifyPopup(false);
-    const email = document.querySelector("#email").value;
-    const otpCode = document.querySelector("#otp-code").value;
 
     const data = await verifyUserCreation(email, otpCode);
 
@@ -87,18 +86,21 @@ export default function Register() {
             id="email"
             type="email"
             title="Email"
+            onChange={(e) => setEmail(e.target.value.trim())}
           />
           <FormInput
             className="text-input"
             id="username"
             type="text"
             title="Tên đăng nhập"
+            onChange={(e) => setUsername(e.target.value.trim())}
           />
           <FormInput
             className="text-input"
             id="password"
             type="password"
             title="Mật khẩu"
+            onChange={(e) => setPassword(e.target.value.trim())}
           />
           <Button
             type="blue-btn"
@@ -119,7 +121,11 @@ export default function Register() {
         />
       )}
       {enableOtpVerifyPopup && (
-        <OtpVerifyPopup cancel={exitOtpVerifyPopup} submit={submitOtp} />
+        <OtpVerifyPopup
+          cancel={exitOtpVerifyPopup}
+          submit={submitOtp}
+          onChange={(e) => setOtpCode(e.target.value.trim())}
+        />
       )}
 
       {enableSuccessPopup && <SuccessPopup />}

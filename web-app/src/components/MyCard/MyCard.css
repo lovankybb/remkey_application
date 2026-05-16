@@ -190,7 +190,7 @@
 }
 
 .answer {
-  height: 300px;
+  height: 150px;
 }
 
 .selection-popup {
@@ -374,8 +374,8 @@
 }
 
 .card-list-container {
-  margin-top: 50px;
-  height: 700px;
+  margin-top: 10px;
+  height: 90%;
   border-radius: 5px;
   background-color: rgb(230, 229, 229);
   overflow: scroll;

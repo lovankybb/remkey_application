@@ -7,9 +7,12 @@ import DisableLayerMedium from "../Popup/DisableLayerMedium";
 import ErrorPopup from "../Popup/ErrorPopup";
 import SelectionPopup from "./SelectionPopup";
 import UploadImagePopup from "../Popup/UploadImagePopup";
-import { createCard, updateCardImageNameOnServer } from "../../service/CardSevice";
+import {
+  createCard,
+  updateCardImageNameOnServer,
+} from "../../service/CardSevice";
 import SuccessPopup from "../Popup/SuccessPopup";
-import {uploadImageToCloud} from "../../service/CloudinaryService"
+import { uploadImageToCloud } from "../../service/CloudinaryService";
 
 function CreateCard({ exitBtn, isClose }) {
   // Card creation variable
@@ -19,6 +22,9 @@ function CreateCard({ exitBtn, isClose }) {
   // UI variable
   const [isCloseTab, setIsCloseTab] = useState(false);
   const [enableDisableLayer, setEnableDisableLayer] = useState(false);
+
+  const [question, setQuestion] = useState("");
+  const [answer, setAnswer] = useState("");
 
   const [topics, setTopics] = useState([]);
   const [topicName, setTopicName] = useState("Chọn chủ đề");
@@ -129,12 +135,7 @@ function CreateCard({ exitBtn, isClose }) {
   // create
 
   async function handleCreateCard() {
-    setEnableDisableLayer(true); 
-    const questionInput = document.querySelector("#question");
-    const answerInput = document.querySelector("#answer");
-
-    const question = questionInput.value.trim();
-    const answer = answerInput.value.trim();
+    setEnableDisableLayer(true);
 
     if (!question || question === "") {
       const message = "Mặt trước của thẻ đang trống";
@@ -165,7 +166,13 @@ function CreateCard({ exitBtn, isClose }) {
     if (data.code === 1000) {
       if (uploadImage !== null) {
         const cloudResp = await uploadImageToCloud(uploadImage);
-        await updateCardImageNameOnServer(data.body.id, cloudResp.secure_url, cloudResp.public_id);
+        await updateCardImageNameOnServer(
+          data.body.id,
+          cloudResp.secure_url,
+          cloudResp.public_id,
+        );
+        setAnswer("");
+        setQuestion("");
       }
 
       handleShowSuccessPopup();
@@ -208,8 +215,17 @@ function CreateCard({ exitBtn, isClose }) {
             className="card-part"
             id="question"
             placeholder="Mặt trước"
+            onChange={(e) => {
+              setQuestion(e.target.value.trim());
+            }}
           />
-          <textarea className="card-part answer" placeholder="Mặt sau" />
+          <textarea
+            className="card-part answer"
+            placeholder="Mặt sau"
+            onChange={(e) => {
+              setAnswer(e.target.value.trim());
+            }}
+          />
           <Button onClick={handleCreateCard} type="blue-btn" title="Tạo thẻ" />
         </form>
       </div>

@@ -73,7 +73,7 @@
   position: fixed;
   background-color: green;
   top: 200px;
-  margin-left: calc(50% - 100px);
+  left: calc(50% - 100px);
   padding: 0px;
   z-index: 900;
 }

@@ -14,6 +14,10 @@ export default function Login() {
   const [errTitle, setErrTitle] = useState("");
   const [enableErrPopup, setEnableErrPopup] = useState(false);
 
+
+  const [username, setUsername] = useState(""); 
+  const [password, setPassword] = useState(""); 
+
   useEffect(() => {
     document.body.style.backgroundImage =
       `url(${backgroundImage})`;
@@ -25,9 +29,9 @@ export default function Login() {
     };
   });
 
+
   async function handleLogin() {
-    const username = document.querySelector("#username").value;
-    const password = document.querySelector("#password").value;
+
 
     setDisableLayer(true);
     const result = await login(username, password);
@@ -59,12 +63,14 @@ export default function Login() {
             id="username"
             type="text"
             title="Tên đăng nhập"
+            onChange={(e)=> setUsername(e.target.value.trim())}
           />
           <FormInput
             className="text-input"
             id="password"
             type="password"
             title="Mật khẩu"
+            onChange={(e)=> setPassword(e.target.value.trim())}
           />
           <Button
             onClick={handleLogin}
