@@ -83,21 +83,18 @@ export default function Register() {
         <form className="register-form" onSubmit={handleSubmit}>
           <FormInput
             className="text-input"
-            id="email"
             type="email"
             title="Email"
             onChange={(e) => setEmail(e.target.value.trim())}
           />
           <FormInput
             className="text-input"
-            id="username"
             type="text"
             title="Tên đăng nhập"
             onChange={(e) => setUsername(e.target.value.trim())}
           />
           <FormInput
             className="text-input"
-            id="password"
             type="password"
             title="Mật khẩu"
             onChange={(e) => setPassword(e.target.value.trim())}

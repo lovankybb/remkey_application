@@ -1,12 +1,12 @@
-import FormInput from "../components/Form/FormItem.jsx";
-import Button from "../components/Button/Button.jsx";
-import DisableLayer from "../components/Popup/DisableLayer.jsx";
 import { useEffect, useState } from "react";
-import login from "../service/LoginService.js";
-import ErrorPopup from "../components/Popup/ErrorPopup.jsx";
-import backgroundImage from "../assets/login-background.jpg"
-import logo from "../assets/logo.png"
 import { Link } from "react-router-dom";
+import backgroundImage from "../assets/login-background.jpg";
+import logo from "../assets/logo.png";
+import Button from "../components/Button/Button.jsx";
+import FormInput from "../components/Form/FormItem.jsx";
+import DisableLayer from "../components/Popup/DisableLayer.jsx";
+import ErrorPopup from "../components/Popup/ErrorPopup.jsx";
+import login from "../service/LoginService.js";
 
 export default function Login() {
   const [isDisableLayer, setDisableLayer] = useState(false);
@@ -14,13 +14,11 @@ export default function Login() {
   const [errTitle, setErrTitle] = useState("");
   const [enableErrPopup, setEnableErrPopup] = useState(false);
 
-
-  const [username, setUsername] = useState(""); 
-  const [password, setPassword] = useState(""); 
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
 
   useEffect(() => {
-    document.body.style.backgroundImage =
-      `url(${backgroundImage})`;
+    document.body.style.backgroundImage = `url(${backgroundImage})`;
 
     document.title = "Đăng nhập";
     return () => {
@@ -29,13 +27,13 @@ export default function Login() {
     };
   });
 
-
   async function handleLogin() {
-
+    console.log("username", username);
+    console.log("password", password);
 
     setDisableLayer(true);
     const result = await login(username, password);
-    
+
     if (result !== null) {
       setErrTitle("Error");
       setErrMessage(result.message);
@@ -63,14 +61,14 @@ export default function Login() {
             id="username"
             type="text"
             title="Tên đăng nhập"
-            onChange={(e)=> setUsername(e.target.value.trim())}
+            onChange={(e) => setUsername(e.target.value.trim())}
           />
           <FormInput
             className="text-input"
             id="password"
             type="password"
             title="Mật khẩu"
-            onChange={(e)=> setPassword(e.target.value.trim())}
+            onChange={(e) => setPassword(e.target.value.trim())}
           />
           <Button
             onClick={handleLogin}

@@ -1,7 +1,7 @@
-function FormInput({onChange, title, id, type, className, placeHolder }) {
+function FormInput({onChange, title, type, className, placeHolder }) {
   return (
     <div>
-      <label htmlFor={id}>{title}</label>
+      <p >{title}</p>
       <input
         className={className}
         type={type}
