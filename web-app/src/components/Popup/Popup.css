@@ -42,7 +42,7 @@
   left: calc(50% - 180px);
   z-index: 800;
   background-color: rgb(255, 255, 255);
-  height: 250px;
+  min-height: 300px;
   box-sizing: border-box;
   padding: 20px;
   text-align: left;

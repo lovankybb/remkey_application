@@ -3,7 +3,7 @@ import Button from "../Button/Button.jsx";
 export default function OtpVerifyPopup({ cancel, submit }) {
   return (
     <div className="otp-verify-popup">
-      <h1>Vui lòng kiểm tra email</h1>
+      <h3>Vui lòng kiểm tra email!</h3>
       <input type="text" id="otp-code" />
       <div>
         <Button title="Cancel" type="exit-otp-verify-btn" onClick={cancel} />
