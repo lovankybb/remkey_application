@@ -1,7 +1,7 @@
 function Package() {
   return (
     <div className="service-package-container">
-      <h2>Tính năng package đang được phát triển</h2>
+      <p>Tính năng package đang được phát triển và sẽ sớm ra mắt</p>
     </div>
   );
 }

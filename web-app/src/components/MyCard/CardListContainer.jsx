@@ -15,6 +15,7 @@ function CardItem({
   answer,
   language,
   topic,
+  mainImage,
   handleFilteredListAfterRemoving,
   setCards
 }) {
@@ -106,6 +107,7 @@ function CardItem({
           isClose={isCloseTab}
           question={question}
           answer={answer}
+          mainImage={mainImage}
           language={language}
           topic={topic}
           close={closeDetailCard}

@@ -246,7 +246,7 @@ function EditCard({
             onChange={(e) => setQuestion(e.target.value)}
           />
           <textarea
-            className="card-part"
+            className="card-part answer"
             value={answer}
             placeholder={answer}
             onChange={(e) => setAnswer(e.target.value)}

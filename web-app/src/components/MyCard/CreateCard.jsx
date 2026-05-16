@@ -122,7 +122,6 @@ function CreateCard({ exitBtn, isClose }) {
 
   const handleSetImage = (event) => {
     const image = event.target.files[0];
-    console.log("files", image);
     setImageName(image.name);
     setUploadImage(image);
   };
@@ -210,7 +209,7 @@ function CreateCard({ exitBtn, isClose }) {
             id="question"
             placeholder="Mặt trước"
           />
-          <textarea className="card-part" id="answer" placeholder="Mặt sau" />
+          <textarea className="card-part answer" placeholder="Mặt sau" />
           <Button onClick={handleCreateCard} type="blue-btn" title="Tạo thẻ" />
         </form>
       </div>

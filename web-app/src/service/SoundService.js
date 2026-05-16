@@ -20,6 +20,9 @@ const speak = (question, language) => {
       case "Japanese": 
         voice = "Japanese Female"; 
         break;
+      case "Vietnamese": 
+        voice = "Vietnamese Female"; 
+        break;
     }
 
     if (window.responsiveVoice) {

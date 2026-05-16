@@ -58,7 +58,6 @@ async function deleteCardUser(id) {
 }
 
 async function updateCardUser(id, question, answer, languageId, topicId) {
-  console.log("card-user-id", id);
   const url = `${BASE_URL}/api/v1/remkey/my-cards/${id}`;
   const jwtToken = localStorage.getItem("jwtToken");
 

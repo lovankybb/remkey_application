@@ -128,7 +128,7 @@ export default function OriginCard({
         <section>
           <h2>{question}</h2>
           <br />
-          <p>{answer}</p>
+          <p style={{"white-space": "pre-line"}}>{answer}</p>
         </section>
       </div>
       {enableDisableLayer && <DisableLayer />}

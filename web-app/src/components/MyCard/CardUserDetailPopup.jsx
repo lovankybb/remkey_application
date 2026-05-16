@@ -6,7 +6,7 @@ export default function CardUserDetailPopup({
   answer,
   language,
   topic,
-  image,
+  mainImage,
   close,
   isClose
 }) {
@@ -14,13 +14,22 @@ export default function CardUserDetailPopup({
     <div className={`card-user-detail ${isClose ? 'popup-out': 'popup-in'} `}>
       <SmallExitHeader onClick={close} />
       <div className="card-user-detail-content">
+        <img
+                  className="illustrate-img "
+                  src={
+                      mainImage
+                      ? mainImage.url
+                      : defaultImg
+                  }
+                  alt="Ảnh minh họa"
+                />
         <p>
           <strong>Mặt trước: </strong>
-          <span>{question}</span>
+          <p>{question}</p>
         </p>
         <p>
           <strong>Mặt sau: </strong>
-          <span>{answer}</span>
+          <p style={{"white-space": "pre-line"}}>{answer}</p>
         </p>
         <p>
           <strong>Ngôn ngữ: </strong>
