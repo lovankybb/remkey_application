@@ -10,7 +10,7 @@ export default function Home() {
 
   useEffect(() => {
 
-    if (localStorage.getItem("jwtToken") === null) window.location.href = "/login";
+    if (!localStorage.getItem("jwtToken")) window.location.href = "/login";
 
     if (!initialized.current) {
       initialized.current = true;

@@ -39,7 +39,7 @@ export default function Login() {
       setErrMessage(result.message);
       setEnableErrPopup(true);
     }
-    if (localStorage.getItem("jwtToken") !== null) window.location.href = "/";
+    if (localStorage.getItem("jwtToken")) window.location.href = "/";
   }
 
   const exitErrorPopup = () => {
