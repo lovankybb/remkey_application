@@ -28,7 +28,7 @@ import org.springframework.web.filter.CorsFilter;
 public class SecurityConfiguration {
 
   private final String[] PUBLIC_ENDPOINT = {
-    "/users/**", "/auth/**", "/payments/momo-ipn", "/payments/vnpay-ipn", "/files/**"
+    "/users/**", "/auth/**", "/payments/momo-ipn", "/payments/vnpay-ipn", "/files/**", "/health"
   };
 
   @Value("${app.sec.cors.endpoint}")
