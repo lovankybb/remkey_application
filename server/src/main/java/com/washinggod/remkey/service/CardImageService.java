@@ -6,27 +6,22 @@ import com.washinggod.remkey.dto.response.CardImageResponse;
 import com.washinggod.remkey.entity.Card;
 import com.washinggod.remkey.entity.CardImage;
 import com.washinggod.remkey.entity.CardUser;
-import com.washinggod.remkey.enums.FileType;
 import com.washinggod.remkey.exception.AppException;
 import com.washinggod.remkey.exception.ErrorCode;
 import com.washinggod.remkey.mapper.CardImageMapper;
 import com.washinggod.remkey.repository.CardImageRepository;
 import com.washinggod.remkey.repository.CardRepository;
 import com.washinggod.remkey.repository.CardUserRepository;
-import com.washinggod.remkey.util.StorageFiles;
 import jakarta.transaction.Transactional;
-
-import java.util.Map;
-import java.util.Objects;
-import java.util.Optional;
-
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
+
+import java.util.Map;
+import java.util.Objects;
 
 @Slf4j
 @Service
@@ -71,7 +66,7 @@ public class CardImageService {
 
       CardUser cardUser = this.getCardUserById(cardUserId);
 
-      Map<String, String> cardUserImageResp  = this.cloudinaryService.duplicateImage(request.getUrl(), request.getPublicId());
+      Map<String, String> cardUserImageResp  = this.cloudinaryService.duplicateImage(request.getUrl());
       CardImage cardUserImage = CardImage.builder().url(cardUserImageResp.get("secure_url"))
               .publicId(cardUserImageResp.get("public_id"))
               .cardUser(cardUser).build();
@@ -103,7 +98,7 @@ public class CardImageService {
   public CardImageResponse setCardUserImage(Long imageId, Long cardUserId) {
 
     CardImage originCardImage = this.getCardImageById(imageId);
-    Map<String, String> newImage = cloudinaryService.duplicateImage(originCardImage.getUrl(), originCardImage.getPublicId());
+    Map<String, String> newImage = cloudinaryService.duplicateImage(originCardImage.getUrl());
 
     CardUser cardUser = this.getCardUserById(cardUserId);
 

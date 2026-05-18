@@ -9,6 +9,9 @@ export default function Home() {
   const initialized = useRef(false);
 
   useEffect(() => {
+
+    if (localStorage.getItem("jwtToken") === null) window.location.href = "/login";
+
     if (!initialized.current) {
       initialized.current = true;
       const setupFCM = async () => {

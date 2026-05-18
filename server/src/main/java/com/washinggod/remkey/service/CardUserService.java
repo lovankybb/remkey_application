@@ -4,29 +4,25 @@ import com.washinggod.remkey.dto.request.AddToMyListRequest;
 import com.washinggod.remkey.dto.request.CardUserUpdateRequest;
 import com.washinggod.remkey.dto.request.HandleCardAfterStudyRequest;
 import com.washinggod.remkey.dto.request.InitCardForUserRequest;
-import com.washinggod.remkey.dto.response.CardImageResponse;
 import com.washinggod.remkey.dto.response.CardUserResponse;
 import com.washinggod.remkey.dto.response.ImageResponse;
 import com.washinggod.remkey.entity.*;
-import com.washinggod.remkey.enums.FileType;
 import com.washinggod.remkey.exception.AppException;
 import com.washinggod.remkey.exception.ErrorCode;
 import com.washinggod.remkey.mapper.CardUserMapper;
 import com.washinggod.remkey.repository.*;
-import java.time.LocalDateTime;
-import java.util.List;
-import java.util.Optional;
-
-import com.washinggod.remkey.util.StorageFiles;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.access.prepost.PostAuthorize;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+
+import java.time.LocalDateTime;
+import java.util.List;
+import java.util.Optional;
 
 @Slf4j
 @Service

@@ -18,6 +18,8 @@ export default function Login() {
   const [password, setPassword] = useState("");
 
   useEffect(() => {
+
+    
     document.body.style.backgroundImage = `url(${backgroundImage})`;
 
     document.title = "Đăng nhập";
@@ -28,8 +30,6 @@ export default function Login() {
   });
 
   async function handleLogin() {
-    console.log("username", username);
-    console.log("password", password);
 
     setDisableLayer(true);
     const result = await login(username, password);
@@ -39,7 +39,7 @@ export default function Login() {
       setErrMessage(result.message);
       setEnableErrPopup(true);
     }
-    if (localStorage.getItem("jwtToken") != null) window.location.href = "/";
+    if (localStorage.getItem("jwtToken") !== null) window.location.href = "/";
   }
 
   const exitErrorPopup = () => {

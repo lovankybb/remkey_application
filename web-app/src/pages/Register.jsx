@@ -24,6 +24,9 @@ export default function Register() {
   const [otpCode, setOtpCode] = useState("");
 
   useEffect(() => {
+
+     if (localStorage.getItem("jwtToken") !== null) window.location.href = "/";
+
     document.title = "Đăng ký tài khoản";
     document.body.style.backgroundImage = `url(${backgroundImage})`;
     return () => {

@@ -5,13 +5,11 @@ import com.washinggod.remkey.dto.request.CardReportCreationRequest;
 import com.washinggod.remkey.dto.response.CardReportResponse;
 import com.washinggod.remkey.entity.Card;
 import com.washinggod.remkey.entity.CardReport;
-import com.washinggod.remkey.enums.FileType;
 import com.washinggod.remkey.exception.AppException;
 import com.washinggod.remkey.exception.ErrorCode;
 import com.washinggod.remkey.mapper.CardReportMapper;
 import com.washinggod.remkey.repository.CardReportRepository;
 import com.washinggod.remkey.repository.CardRepository;
-import com.washinggod.remkey.util.StorageFiles;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -27,7 +25,6 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
-@PreAuthorize("hasRole('ADMIN')")
 public class CardReportService {
 
 
@@ -39,6 +36,7 @@ public class CardReportService {
 
     CloudinaryService cloudinaryService;
 
+    @PreAuthorize("hasRole('ADMIN')")
     public List<CardReportResponse> getAll() {
 
         return this.cardReportRepository.findAll()
@@ -55,6 +53,7 @@ public class CardReportService {
     }
 
 
+    @PreAuthorize("hasRole('ADMIN')")
     public void acceptHandlingReport(Long id) {
 
         CardReport cardReport = this.getCardReportById(id);
@@ -70,6 +69,7 @@ public class CardReportService {
 
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     public void delete(Long id) {
         cardReportRepository.delete(this.getCardReportById(id));
     }

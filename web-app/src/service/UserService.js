@@ -32,8 +32,10 @@ async function logout() {
       method: "POST",
       headers: {
         "Content-type": "application/json",
-        Authorization: `Bearer ${jwtToken}`,
       },
+      body: JSON.stringify({
+        'token': jwtToken
+      })
     });
   } catch (err) {
     console.log(err);

@@ -81,6 +81,11 @@
   padding: 5px 20px;
 }
 
+.origin-card-menu-section p{
+  display: flex;
+  justify-content: space-between ;
+}
+
 
 .speaker-icon{
   padding: 5px 20px;

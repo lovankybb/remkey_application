@@ -22,7 +22,7 @@ public class CloudinaryService {
 
     Cloudinary cloudinary;
 
-    public Map<String, String> duplicateImage(String imageUrl, String publicId) {
+    public Map<String, String> duplicateImage(String imageUrl) {
 
         Map params = ObjectUtils.asMap(
                 "resource_type", "image"
