@@ -1,7 +1,7 @@
-import { useEffect, useMemo, useState } from "react";
-import ReportDetail from "./ReportDetail";
-import DisableLayer from "../Popup/DisableLayer";
+import { useEffect, useState } from "react";
 import { getAllReports } from "../../service/ReportService";
+import DisableLayer from "../Popup/DisableLayer";
+import ReportDetail from "./ReportDetail";
 
 export default function ReportListContainer() {
   const [loading, setLoading] = useState(true);
