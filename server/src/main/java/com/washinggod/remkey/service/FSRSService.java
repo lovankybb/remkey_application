@@ -30,7 +30,7 @@ public class FSRSService {
 
     final double DEFAULT_PARAM = 9;
 
-    public void initValue(CardUser cardUser) {
+    public CardUser initValue(CardUser cardUser, LocalDateTime now) {
 
         double stability = WEIGHT[(int) FIRST_RATING - 1];
         Double retrievability = FIRST_RETRIEVABILITY;
@@ -39,21 +39,23 @@ public class FSRSService {
         cardUser.setRetrievability(retrievability);
         cardUser.setDifficulty(difficulty);
         cardUser.setStability(stability);
-        cardUser.setLastReview(LocalDateTime.now());
+        cardUser.setLastReview(now);
 
-        cardUser.setCreatedAt(LocalDateTime.now());
+        cardUser.setCreatedAt(now);
 
         //    parse to second
         long secondToAdd = (long) (stability * 24 * 60 * 60);
 
-        LocalDateTime nextReview = LocalDateTime.now().plusSeconds(secondToAdd);
+        LocalDateTime nextReview = now.plusSeconds(secondToAdd);
 
         cardUser.setNextReview(nextReview);
+
+        return cardUser;
     }
 
-    public double updateRetrievability(double stability, LocalDateTime last_review) {
+    public double updateRetrievability(double stability, LocalDateTime last_review, LocalDateTime now) {
 
-        Duration timeDuration = Duration.between(last_review, LocalDateTime.now());
+        Duration timeDuration = Duration.between(last_review, now);
         double time = (double) timeDuration.toSeconds() / 60.0 / 60.0 / 24.0;
 
         return Math.pow(1 + (time / (DEFAULT_PARAM * stability)), -1);
