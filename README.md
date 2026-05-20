@@ -13,9 +13,9 @@ What truly sets Remkey apart is its integrated social ecosystem. Beyond personal
 
 ### Screenshot
 
-<img width="32%" src="./images/Screenshot_2026-05-21_04-39-00.png"> 
-<img width="32%" src="./images/Screenshot_2026-05-21_04-38-33.png">
-<img width="32%" src="./images/Screenshot_2026-05-21_04-37-46.png"> 
+<img width="30%" src="./images/Screenshot_2026-05-21_04-39-00.png"> |
+<img width="30%" src="./images/Screenshot_2026-05-21_04-38-33.png"> |
+<img width="30%" src="./images/Screenshot_2026-05-21_04-37-46.png"> 
 
 ## 2. Business document
 
