@@ -10,6 +10,18 @@ What truly sets Remkey apart is its integrated social ecosystem. Beyond personal
 
 https://remkey.site
 
+### Screenshot
+
+<div 
+style="display: grid; 
+grid-template-columns: auto auto auto;
+ ">
+<img src="./images/Screenshot_2026-05-21_04-37-46.png"> 
+<img src="./images/Screenshot_2026-05-21_04-39-00.png"> 
+<img src="./images/Screenshot_2026-05-21_04-38-33.png">
+
+</div>
+
 ## 2. Business document
 
     https://drive.google.com/drive/u/1/folders/1O5JeI9eR3FV54rDBGYc0tVMPpWb_tMcu
@@ -35,10 +47,9 @@ https://remkey.site
 - FireBase
 - ResponsiveVoice
 - Resend mail
-- Cloudinary 
+- Cloudinary
 
-
-###  Security
+### Security
 
 - Jwt token
 - Bucket4j
@@ -47,7 +58,6 @@ https://remkey.site
 ### Core algorithm
 
 - FSRS (Free Spaced Repetition Scheduler): The core mathematical model for interval scheduling and memory optimization.
-
 
 ## 4. Installation & Setup
 
@@ -79,7 +89,7 @@ https://remkey.site
 
 ### Backend configuration
 
-#### 1. Create file server/src/.env 
+#### 1. Create file server/src/.env
 
 ```
 #File: .env
@@ -114,24 +124,24 @@ VNPAY_EXPIRE_TIME=
 
 
 MOM0_PARTNER_CODE=
-MOMO_ACCESS_KEY= 
-MOMO_SECRET_KEY= 
+MOMO_ACCESS_KEY=
+MOMO_SECRET_KEY=
 MOMO_RETURN_URL=
 MOMO_API_URL=
-MOMO_NOTIFY_URL= 
+MOMO_NOTIFY_URL=
 
 
 ```
 
-
 #### 2. Add file server/src/main/resources/firebase/your_firebase_secret_key.json
 
-  - Create a project at https://firebase.google.com/ and get your_firebase_secret_key.json
+- Create a project at https://firebase.google.com/ and get your_firebase_secret_key.json
 
 ### Frontend
 
-#### 1. Create file web-app/.env 
-  ```
+#### 1. Create file web-app/.env
+
+```
 #File: .env
 
 VITE_API_BASE_URL=http://localhost:8080
@@ -147,7 +157,7 @@ VITE_APP_ID=
 VITE_MEASUREMENT_ID=
 
 
-  ```
+```
 
 #### 2. Create file web-app/public/firebase-messaging-sw.js
 
@@ -171,9 +181,9 @@ messaging.onBackgroundMessage((payload) => {
   const notificationTitle = payload.notification.title || "Remkey Notification";
   const notificationOptions = {
     body: payload.notification.body || "Bạn có tin nhắn mới",
-    icon: "/logo.png", 
-    badge: "/logo.png", 
-    data: { url: "/" }   
+    icon: "/logo.png",
+    badge: "/logo.png",
+    data: { url: "/" }
   };
 
   return self.registration.showNotification(notificationTitle, notificationOptions);
@@ -190,7 +200,6 @@ self.addEventListener('notificationclick', (event) => {
 ### Postman
 
     Link: https://lovankydev.postman.co/workspace/lovankydev's-Workspace~053387a3-a707-44bc-8a9c-9cfdcdad1ce7/collection/46238050-1c1d4b70-bc20-45d4-84ce-d0fd5c5593db?action=share&source=copy-link&creator=46238050
-
 
 ## Contact
 
