@@ -8,7 +8,8 @@ Unlike traditional applications that rely on outdated scheduling models, Remkey 
 
 What truly sets Remkey apart is its integrated social ecosystem. Beyond personal study, it features a built-in "mini social network" where you can discover, share, and import community-created flashcard decks directly into your own library—making knowledge-sharing seamless and free.
 
-https://remkey.site
+## Deploy demo
+[remkey.site](https://remkey.site)
 
 ### Screenshot
 
@@ -24,8 +25,8 @@ grid-template-columns: auto auto auto;
 
 ## 2. Business document
 
-    https://drive.google.com/drive/u/1/folders/1O5JeI9eR3FV54rDBGYc0tVMPpWb_tMcu
-
+- [Google driver](https://drive.google.com/drive/u/1/folders/1O5JeI9eR3FV54rDBGYc0tVMPpWb_tMcu)
+    
 ## 3.Tech Stack
 
 ### Backend
@@ -63,29 +64,29 @@ grid-template-columns: auto auto auto;
 
 ### Prerequisites
 
-- JDK 21 or higher https://www.oracle.com/java/technologies/downloads/
+- [JDK 21 or higher](https://www.oracle.com/java/technologies/downloads/)
 
-- Maven 3.6+ https://maven.apache.org/install.html
+- [Maven 3.6+](https://maven.apache.org/install.html)
 
-- PostgreSQL 14+ https://www.postgresql.org/download/
+- [PostgreSQL 14+](https://www.postgresql.org/download/)
 
-- Firebase data from https://firebase.google.com/
+- [Firebase](https://firebase.google.com/)
 
-- Resend Api from https://resend.com/emails
+- [Resend](https://resend.com/emails)
 
-- Cloudinary api from https://cloudinary.com/
+- [Cloudinary](https://cloudinary.com/)
 
-- Docker engine https://docs.docker.com/engine/install/
+- [Docker](https://docs.docker.com/engine/install/)
 
-- Nodejs https://nodejs.org/en
+- [Nodejs](https://nodejs.org/en)
 
 ### Clone the Repository
 
-- git clone https://github.com/lovankybb/remkey_application
-
+ ```git clone https://github.com/lovankybb/remkey_application```
+ 
 ### Database Configuration
 
-- At root directory run command: sudo docker compose up -d
+- At root directory run command: ```sudo docker compose up -d```
 
 ### Backend configuration
 
@@ -135,7 +136,7 @@ MOMO_NOTIFY_URL=
 
 #### 2. Add file server/src/main/resources/firebase/your_firebase_secret_key.json
 
-- Create a project at https://firebase.google.com/ and get your_firebase_secret_key.json
+- Create a project at https://firebase.google.com/ .Get your_firebase_secret_key.json and put it at the correct location.
 
 ### Frontend
 
@@ -199,10 +200,10 @@ self.addEventListener('notificationclick', (event) => {
 
 ### Postman
 
-    Link: https://lovankydev.postman.co/workspace/lovankydev's-Workspace~053387a3-a707-44bc-8a9c-9cfdcdad1ce7/collection/46238050-1c1d4b70-bc20-45d4-84ce-d0fd5c5593db?action=share&source=copy-link&creator=46238050
+  [View API collection](https://lovankydev.postman.co/workspace/lovankydev's-Workspace~053387a3-a707-44bc-8a9c-9cfdcdad1ce7/collection/46238050-1c1d4b70-bc20-45d4-84ce-d0fd5c5593db?action=share&source=copy-link&creator=46238050)
 
 ## Contact
-
+- Author: Lo Van Ky
 - Email: lovanky.work@gmail.com
 - Phone: +8486535996
 - Zalo: +84865305996
