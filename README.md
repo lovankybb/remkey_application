@@ -42,7 +42,7 @@ What truly sets Remkey apart is its integrated social ecosystem. Beyond personal
 - FireBase
 - ResponsiveVoice
 - Resend mail
-- Cloudinary
+
 
 ### Security
 
