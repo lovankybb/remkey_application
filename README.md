@@ -8,6 +8,8 @@ Unlike traditional applications that rely on outdated scheduling models, Remkey 
 
 What truly sets Remkey apart is its integrated social ecosystem. Beyond personal study, it features a built-in "mini social network" where you can discover, share, and import community-created flashcard decks directly into your own library—making knowledge-sharing seamless and free.
 
+https://remkey.site
+
 ## 2. Business document
 
     https://drive.google.com/drive/u/1/folders/1O5JeI9eR3FV54rDBGYc0tVMPpWb_tMcu
@@ -17,7 +19,7 @@ What truly sets Remkey apart is its integrated social ecosystem. Beyond personal
 ### Backend
 
 - Java 21
-- Spring Boot 4
+- Spring Boot 3
 
 ### Database & Storage
 
@@ -32,6 +34,8 @@ What truly sets Remkey apart is its integrated social ecosystem. Beyond personal
 
 - FireBase
 - ResponsiveVoice
+- Resend mail
+- Cloudinary 
 
 
 ###  Security
@@ -49,19 +53,21 @@ What truly sets Remkey apart is its integrated social ecosystem. Beyond personal
 
 ### Prerequisites
 
-- JDK 21 or higher
+- JDK 21 or higher https://www.oracle.com/java/technologies/downloads/
 
-- Maven 3.6+
+- Maven 3.6+ https://maven.apache.org/install.html
 
-- PostgreSQL 14+
+- PostgreSQL 14+ https://www.postgresql.org/download/
 
 - Firebase data from https://firebase.google.com/
 
-- Docker engine
+- Resend Api from https://resend.com/emails
 
-- Nodejs
+- Cloudinary api from https://cloudinary.com/
 
-- Npm 
+- Docker engine https://docs.docker.com/engine/install/
+
+- Nodejs https://nodejs.org/en
 
 ### Clone the Repository
 
@@ -73,72 +79,50 @@ What truly sets Remkey apart is its integrated social ecosystem. Beyond personal
 
 ### Backend configuration
 
-#### 1. Create file server/src/main/resources/application.yaml (or use Environment Variables):
+#### 1. Create file server/src/.env 
 
 ```
-spring:
-application:
- name: remkey
-#    connect to db
-datasource:
- url: jdbc:postgresql://localhost:5432/remkey
- username: #your username
- password: #your password
- driver-class-name: org.postgresql.Driver
-data:
- redis:
-   host: localhost
-   port: 6379
-#      config jpa for postgres
-jpa:
- hibernate:
-   ddl-auto: none
- show-sql: true
- database-platform: org.hibernate.dialect.PostgreSQLDialect
+#File: .env
+
+DATASOURCE_URL=
+DATASOURCE_USERNAME=
+DATASOURCE_PASSWORD=
 
 
-flyway:
- enabled: true
- locations: classpath:db/migration
- repair-on-migrate: true
- baseline-on-migrate: true
+REDIS_URL=
 
-mail:
- host: smtp.gmail.com
- port: 587
- username: #your email
- password: #your password
- properties:
-   mail:
-     smtp:
-       auth: true
-       starttls:
-         enable: true
-         required: true
+#cloud
+CLOUDINARY_CLOUD_NAME=
+CLOUDINARY_SECRET_KEY=
+FRONT_END_ADDRESS=
 
 
-# json web token
-jwt:
-secret-key: #your secret key
-valid-duration: 5 #days
-refreshable:  6 #days
+RESEND_API_KEY=
 
 
-app:
-sec:
- otp-verifier:
-   valid-duration: 5 #minutes
-   refreshable:  1 #minutes
-   request-limit: 5 #times per day
- cors:
-   endpoint: "*" #your cors enpoint
+JWT_SECRETE_KEY=
+JWT_VALID_DURATION=
+JWT_REFRESHABLE=
 
-server:
-servlet:
- context-path: /api/v1/remkey
- port: 8080
+
+VNPAY_TMN_CODE=
+VNPAY_SECRETE_KEY=
+VNPAY_PAY_URL=
+VNPAY_RETURN_URL=
+VNPAY_EXPIRE_TIME=
+
+
+
+MOM0_PARTNER_CODE=
+MOMO_ACCESS_KEY= 
+MOMO_SECRET_KEY= 
+MOMO_RETURN_URL=
+MOMO_API_URL=
+MOMO_NOTIFY_URL= 
+
 
 ```
+
 
 #### 2. Add file server/src/main/resources/firebase/your_firebase_secret_key.json
 
@@ -146,7 +130,7 @@ servlet:
 
 ### Frontend
 
-  - Create file web-app/.env 
+#### 1. Create file web-app/.env 
   ```
 #File: .env
 
@@ -165,6 +149,44 @@ VITE_MEASUREMENT_ID=
 
   ```
 
+#### 2. Create file web-app/public/firebase-messaging-sw.js
+
+```
+importScripts('https://www.gstatic.com/firebasejs/9.0.0/firebase-app-compat.js');
+importScripts('https://www.gstatic.com/firebasejs/9.0.0/firebase-messaging-compat.js');
+
+const firebaseConfig = {
+  apiKey: your-api-key,
+  projectId: your-project-id,
+  messagingSenderId: your-messaging-id,
+  appId: your-app-id,
+};
+
+firebase.initializeApp(firebaseConfig);
+const messaging = firebase.messaging();
+
+messaging.onBackgroundMessage((payload) => {
+  console.log("[sw.js] Nhận thông báo trong background", payload);
+
+  const notificationTitle = payload.notification.title || "Remkey Notification";
+  const notificationOptions = {
+    body: payload.notification.body || "Bạn có tin nhắn mới",
+    icon: "/logo.png", 
+    badge: "/logo.png", 
+    data: { url: "/" }   
+  };
+
+  return self.registration.showNotification(notificationTitle, notificationOptions);
+});
+
+self.addEventListener('notificationclick', (event) => {
+  event.notification.close();
+  event.waitUntil(
+    clients.openWindow(event.notification.data.url)
+  );
+});
+```
+
 ### Postman
 
     Link: https://lovankydev.postman.co/workspace/lovankydev's-Workspace~053387a3-a707-44bc-8a9c-9cfdcdad1ce7/collection/46238050-1c1d4b70-bc20-45d4-84ce-d0fd5c5593db?action=share&source=copy-link&creator=46238050
@@ -174,4 +196,5 @@ VITE_MEASUREMENT_ID=
 
 - Email: lovanky.work@gmail.com
 - Phone: +8486535996
-- Address: Haiphong, Vietnam.
+- Zalo: +84865305996
+- Address: Haiphong , Vietnam.
