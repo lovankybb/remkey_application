@@ -24,7 +24,6 @@ public class FSRSServiceTest {
 
         lockedNow = LocalDateTime.of(2026, 1, 1, 0, 0, 0);
         cardUserInitRequest = CardUser.builder()
-                .userId("user-id")
                 .question("Hello")
                 .answer("Xin chao")
                 .build();
@@ -38,7 +37,6 @@ public class FSRSServiceTest {
 
         CardUser resp = fsrsService.initValue(cardUserInitRequest, lockedNow);
 
-        Assertions.assertThat(resp.getUserId()).isEqualTo("user-id");
         Assertions.assertThat(resp.getQuestion()).isEqualTo("Hello");
         Assertions.assertThat(resp.getAnswer()).isEqualTo("Xin chao");
         Assertions.assertThat(resp.getDifficulty()).isEqualTo(4.93);
