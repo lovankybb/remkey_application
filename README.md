@@ -13,15 +13,9 @@ What truly sets Remkey apart is its integrated social ecosystem. Beyond personal
 
 ### Screenshot
 
-<div 
-style="display: grid; 
-grid-template-columns: auto auto auto;
- ">
-<img src="./images/Screenshot_2026-05-21_04-37-46.png"> 
-<img src="./images/Screenshot_2026-05-21_04-39-00.png"> 
-<img src="./images/Screenshot_2026-05-21_04-38-33.png">
-
-</div>
+<img width="32%" src="./images/Screenshot_2026-05-21_04-39-00.png"> 
+<img width="32%" src="./images/Screenshot_2026-05-21_04-38-33.png">
+<img width="32%" src="./images/Screenshot_2026-05-21_04-37-46.png"> 
 
 ## 2. Business document
 
@@ -83,7 +77,7 @@ grid-template-columns: auto auto auto;
 ### Clone the Repository
 
  ```git clone https://github.com/lovankybb/remkey_application```
- 
+
 ### Database Configuration
 
 - At root directory run command: ```sudo docker compose up -d```
