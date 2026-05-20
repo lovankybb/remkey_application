@@ -3,9 +3,11 @@ package com.washinggod.remkey.service;
 import com.google.firebase.messaging.*;
 import com.washinggod.remkey.dto.request.NotificationTokenCreationRequest;
 import com.washinggod.remkey.entity.NotificationToken;
+import com.washinggod.remkey.entity.User;
 import com.washinggod.remkey.exception.AppException;
 import com.washinggod.remkey.exception.ErrorCode;
 import com.washinggod.remkey.repository.NotificationTokenRepository;
+import com.washinggod.remkey.repository.UserRepository;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -23,6 +25,8 @@ public class FmcService {
 
   NotificationTokenRepository notificationTokenRepository;
 
+  UserRepository userRepository;
+
   public void sendPushNotification(String token, String title, String body) {
 
     Message message =
@@ -33,8 +37,9 @@ public class FmcService {
 
     try {
       FirebaseMessaging.getInstance().send(message);
-      log.info("Send notification to user successfully");
     } catch (FirebaseMessagingException exception) {
+      log.error("ERROR: Failed in sending notification to token: {}", token);
+      log.error("Cause by: {}", exception.getMessage());
       this.handleFireBaseMessagingException(token, exception);
     }
   }
@@ -51,12 +56,8 @@ public class FmcService {
 
   public void createNotificationToken(NotificationTokenCreationRequest request) {
 
-    Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-
-    String userId = auth.getName();
-
     NotificationToken notificationToken = new NotificationToken();
-    notificationToken.setUserId(userId);
+    notificationToken.setUser(this.getCurrentUser());
     notificationToken.setToken(request.getToken());
 
     try {
@@ -64,5 +65,17 @@ public class FmcService {
     } catch (DataIntegrityViolationException e) {
       throw new AppException(ErrorCode.SAVE_NOTIFICATION_TOKEN_FAILED);
     }
+  }
+
+
+  private User getCurrentUser(){
+
+    Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+
+    String userId = auth.getName();
+
+    return this.userRepository.findById(userId).orElseThrow(()-> {
+      return new AppException(ErrorCode.USER_NOT_EXIST);
+    });
   }
 }

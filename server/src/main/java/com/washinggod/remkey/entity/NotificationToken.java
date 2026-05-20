@@ -18,8 +18,9 @@ public class NotificationToken {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   Long id;
 
-  @Column(name = "user_id", columnDefinition = "TEXT")
-  String userId;
+  @ManyToOne
+  @JoinColumn(name = "user_id", columnDefinition = "TEXT")
+  User user;
 
   @Column(columnDefinition = "TEXT")
   String token;

@@ -43,4 +43,7 @@ public class User {
 
     @OneToMany(fetch = FetchType.LAZY, orphanRemoval = true, cascade = CascadeType.ALL, mappedBy = "user")
     List<CardUser> cardUsers;
+
+    @OneToMany(fetch = FetchType.LAZY, orphanRemoval = true, cascade = CascadeType.ALL, mappedBy = "user")
+    List<NotificationToken> notificationTokens;
 }
