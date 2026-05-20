@@ -48,14 +48,17 @@ public class CardUserService {
 
     CloudinaryService cloudinaryService;
 
+    UserRepository userRepository;
 
     public CardUser initCardForUser(InitCardForUserRequest request) {
 
         Card card = this.getCardById(request.getCardId());
 
+        User user = this.getUserById(this.getCurrentUserId()) ;
+
         CardUser cardUser =
                 CardUser.builder()
-                        .userId(request.getUserId())
+                        .user(user)
                         .language(card.getLanguage())
                         .topic(card.getTopic())
                         .question(card.getQuestion())
@@ -101,10 +104,9 @@ public class CardUserService {
 
     public CardUserResponse addToMyList(AddToMyListRequest request) {
 
-        String userId = this.getCurrentUserId();
         CardUser cardUser =
                 this.initCardForUser(
-                        InitCardForUserRequest.builder().userId(userId).cardId(request.getCardId()).build());
+                        InitCardForUserRequest.builder().cardId(request.getCardId()).build());
 
         Card card = this.getCardById(request.getCardId());
 
@@ -154,8 +156,8 @@ public class CardUserService {
 
     public List<CardUserResponse> getAllMyCards() {
 
-        String userId = this.getCurrentUserId();
-        return cardUserRepository.findByUserId(userId).stream()
+        User user = this.getUserById(this.getCurrentUserId());
+        return cardUserRepository.findByUser(user).stream()
                 .map(this::generateCardUserResponse)
                 .toList();
     }
@@ -179,6 +181,7 @@ public class CardUserService {
         CardUserResponse cardUserResponse = cardUserMapper.toCardUserResponse(cardUser);
         cardUserResponse.setLanguage(cardUser.getLanguage().getName());
         cardUserResponse.setTopic(cardUser.getTopic().getName());
+        cardUserResponse.setUserId(cardUser.getUser().getId());
 
         Optional<CardImage> cardImage = cardImageRepository.findByCardUser(cardUser);
 
@@ -191,7 +194,7 @@ public class CardUserService {
         return cardUserResponse;
     }
 
-    @PostAuthorize("returnObject.userId == authentication.name")
+    @PostAuthorize("returnObject.user.id == authentication.name")
     private CardUser getCardUserById(Long id) {
         return cardUserRepository
                 .findById(id)
@@ -199,6 +202,13 @@ public class CardUserService {
                         () -> {
                             return new AppException(ErrorCode.CARD_NOT_EXIST);
                         });
+    }
+
+
+    private User getUserById(String id){
+        return this.userRepository.findById(id).orElseThrow(()-> {
+            return new AppException(ErrorCode.USER_NOT_EXIST);
+        });
     }
 
     private Language getLanguageById(Long id) {

@@ -1,8 +1,11 @@
 package com.washinggod.remkey.entity;
 
 import jakarta.persistence.*;
+
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Set;
+
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
@@ -16,24 +19,28 @@ import lombok.experimental.FieldDefaults;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class User {
 
-  @Id
-  @GeneratedValue(strategy = GenerationType.UUID)
-  String id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.UUID)
+    String id;
 
-  String username;
-  String password;
-  String email;
+    String username;
+    String password;
+    String email;
 
-  @ManyToMany(fetch = FetchType.LAZY)
-  @JoinTable(
-      name = "users_roles ",
-      joinColumns = @JoinColumn(name = "user_id"),
-      inverseJoinColumns = @JoinColumn(name = "role_id"))
-  Set<Role> roles;
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(
+            name = "users_roles ",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id"))
+    Set<Role> roles;
 
-  @Column(name = "created_at")
-  LocalDateTime createdAt;
+    @Column(name = "created_at")
+    LocalDateTime createdAt;
 
-  @Column(name = "updated_at")
-  LocalDateTime updatedAt;
+    @Column(name = "updated_at")
+    LocalDateTime updatedAt;
+
+
+    @OneToMany(fetch = FetchType.LAZY, orphanRemoval = true, cascade = CascadeType.ALL, mappedBy = "user")
+    List<CardUser> cardUsers;
 }

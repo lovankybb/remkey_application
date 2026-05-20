@@ -71,7 +71,7 @@ public class CardService {
     String userId = this.getCurrUserId();
 
     InitCardForUserRequest initCardForUserRequest =
-        InitCardForUserRequest.builder().cardId(card.getId()).userId(userId).build();
+        InitCardForUserRequest.builder().cardId(card.getId()).build();
 
     CardUser cardUser = cardUserService.initCardForUser(initCardForUserRequest);
 
