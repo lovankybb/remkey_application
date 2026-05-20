@@ -1,8 +1,9 @@
-function FormInput({onChange, title, type, className, placeHolder }) {
+function FormInput({ value, onChange, title, type, className, placeHolder }) {
   return (
     <div>
-      <p >{title}</p>
+      <p>{title}</p>
       <input
+        value={value ? value : ""}
         className={className}
         type={type}
         onChange={onChange}

@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { updateTopic } from "../../service/TopicService";
 import Button from "../Button/Button";
 import FormInput from "../Form/FormItem";
@@ -12,21 +13,26 @@ function UpdateTopic({
   enablErrorPopup,
   setTopics,
 }) {
+
+
+  const [newTopicName, setNewTopicName] = useState(topicName); 
+
   function onSubmit(e) {
     e.preventDefault();
   }
 
+
+
   async function handleUpdateTopic() {
-    const newName = document.querySelector("#topic-name").value.trim();
 
     try {
-      const data = await updateTopic(topicId, newName);
+      const data = await updateTopic(topicId, newTopicName);
 
       if (data.code === 1000) {
         enableSuccessPopup();
         setTopics((prevTopics) =>
           prevTopics.map((topic) =>
-            topic.id === topicId ? { ...topic, name: newName } : topic,
+            topic.id === topicId ? { ...topic, name: newTopicName } : topic,
           ),
         );
       } else {
@@ -47,7 +53,7 @@ function UpdateTopic({
       <SmallExitHeader onClick={closeUpdateTopicTab} />
       <h2>Chỉnh sửa chủ đề</h2>
       <form action="" onSubmit={onSubmit}>
-        <FormInput id="topic-name" type="text" placeHolder={topicName} />
+        <FormInput value={newTopicName} onChange={(e)=> setNewTopicName(e.target.value.trim())} type="text" placeHolder={topicName} />
         <Button
           title="Lưu"
           type="submit-blue-btn"

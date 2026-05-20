@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { createTopic } from "../../service/TopicService";
 import Button from "../Button/Button";
 import FormInput from "../Form/FormItem";
@@ -11,14 +12,17 @@ function CreateTopic({
   topics,
   setTopics,
 }) {
+
+  const [topicName, setTopicName] = useState("");
+
   function onSubmit(e) {
     e.preventDefault();
   }
 
   async function handleCreateTopic() {
-    const input = document.querySelector("#topic-name");
+  
     try {
-      const data = await createTopic(input.value.trim());
+      const data = await createTopic(topicName);
 
       if (data.code === 1000) {
         const topic = data.body;
@@ -35,7 +39,7 @@ function CreateTopic({
     } catch (error) {
       console.log(error);
     } finally {
-      input.value = "";
+      setTopicName(""); 
     }
   }
 
@@ -46,7 +50,7 @@ function CreateTopic({
       <SmallExitHeader onClick={closeCreateTopicTab} />
       <h2>Thêm chủ đề</h2>
       <form action="" onSubmit={onSubmit}>
-        <FormInput id="topic-name" type="text" placeHolder="Chủ đề mới" />
+        <FormInput value={topicName} onChange={(e)=> setTopicName(e.target.value.trim())} type="text" placeHolder="Chủ đề mới" />
         <Button
           title="Thêm"
           type="submit-blue-btn"
