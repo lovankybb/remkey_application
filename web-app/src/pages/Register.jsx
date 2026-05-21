@@ -23,10 +23,9 @@ export default function Register() {
   const [email, setEmail] = useState("");
   const [otpCode, setOtpCode] = useState("");
 
+   const [isHiddenPassword, setIsHiddenPassword] = useState(true);
+
   useEffect(() => {
-
-     if (localStorage.getItem("jwtToken") !== null) window.location.href = "/";
-
     document.title = "Đăng ký tài khoản";
     document.body.style.backgroundImage = `url(${backgroundImage})`;
     return () => {
@@ -88,15 +87,21 @@ export default function Register() {
             className="text-input"
             type="email"
             title="Email"
+            value={email}
             onChange={(e) => setEmail(e.target.value.trim())}
           />
           <FormInput
             className="text-input"
             type="text"
             title="Tên đăng nhập"
+            value={username}
             onChange={(e) => setUsername(e.target.value.trim())}
           />
           <FormInput
+            isPasswordField={true}
+            setIsHiddenPassword={setIsHiddenPassword}
+            isHiddenPassword={isHiddenPassword}
+            value={password}
             className="text-input"
             type="password"
             title="Mật khẩu"

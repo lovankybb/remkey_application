@@ -588,6 +588,8 @@
   box-sizing: border-box;
   padding: 10px;
   position: fixed;
+  height: 100%;
+  overflow: scroll;
   z-index: 800;
   width: 100%;
 }
@@ -595,17 +597,19 @@
 .report-detail-content {
   overflow: scroll;
   margin-top: 10px;
-  max-height: 650px;
+  max-height: 70%;
   line-height: 1.3;
 }
 
 .handle-report-btn-container {
-  margin-top: 20px;
+  margin-bottom: 50px;
+  padding: 5px;
   display: flex;
   justify-content: space-between;
 }
 
 .handle-report-btn-container button {
+  padding: 10px 0px;
   height: 40px;
   outline: none;
   border: none;

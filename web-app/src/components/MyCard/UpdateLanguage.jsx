@@ -2,6 +2,7 @@ import Button from "../Button/Button";
 import FormInput from "../Form/FormItem";
 import SmallExitHeader from "../Header/SmallExitHeader";
 import { updateLanguage } from "../../service/LanguageService";
+import { useState } from "react";
 export default function UpdateLanguage({
   languageId,
   languageName,
@@ -9,35 +10,32 @@ export default function UpdateLanguage({
   closeUpdateLanguageTab,
   handleEnableSuccessPopup,
   handleEnableErrorPopup,
-  setLanguages
+  setLanguages,
 }) {
+  const [newLanguageName, setNewLanguageName] = useState(languageName);
+
   function onSubmit(e) {
     e.preventDefault();
   }
 
   async function handleUpdateLanguage() {
-
-    const nameInput = document.querySelector('#language-name');
-
-    const newLanguageName = nameInput.value.trim();
     const data = await updateLanguage(languageId, newLanguageName);
 
     if (data.code === 1000) {
       handleEnableSuccessPopup();
-      setLanguages(prevLanguages =>
+      setLanguages((prevLanguages) =>
         prevLanguages.map((language) =>
           language.id === languageId
-            ? { ...language, name: newLanguageName } : language
-        )
+            ? { ...language, name: newLanguageName }
+            : language,
+        ),
       );
-    }
-    else {
+    } else {
       const message = `code: ${data.code}
-                      message: ${data.message}`
+                      message: ${data.message}`;
 
-      handleEnableErrorPopup(message)
+      handleEnableErrorPopup(message);
     }
-
   }
   return (
     <div
@@ -46,9 +44,13 @@ export default function UpdateLanguage({
       <SmallExitHeader onClick={closeUpdateLanguageTab} />
       <h2>Sửa ngôn ngữ</h2>
       <form action="" onSubmit={onSubmit}>
-        <FormInput id="language-name" type="text" placeHolder={languageName} />
+        <FormInput
+          value={newLanguageName}
+          onChange={(e) => setNewLanguageName(e.target.value.trim())}
+          type="text"
+        />
         <Button
-          title="Thêm"
+          title="Lưu"
           type="submit-blue-btn"
           onClick={handleUpdateLanguage}
         />

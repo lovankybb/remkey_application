@@ -17,9 +17,9 @@ export default function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
-  useEffect(() => {
+  const [isHiddenPassword, setIsHiddenPassword] = useState(true);
 
-    
+  useEffect(() => {
     document.body.style.backgroundImage = `url(${backgroundImage})`;
 
     document.title = "Đăng nhập";
@@ -30,7 +30,6 @@ export default function Login() {
   });
 
   async function handleLogin() {
-
     setDisableLayer(true);
     const result = await login(username, password);
 
@@ -39,7 +38,7 @@ export default function Login() {
       setErrMessage(result.message);
       setEnableErrPopup(true);
     }
-    if (localStorage.getItem("jwtToken") !== null) window.location.href = "/";
+    if (localStorage.getItem("jwtToken")) window.location.href = "/";
   }
 
   const exitErrorPopup = () => {
@@ -58,14 +57,17 @@ export default function Login() {
         <form className="login-form" onSubmit={handleSubmit}>
           <FormInput
             className="text-input"
-            id="username"
+            value={username}
             type="text"
             title="Tên đăng nhập"
             onChange={(e) => setUsername(e.target.value.trim())}
           />
           <FormInput
+            isPasswordField={true}
+            isHiddenPassword={isHiddenPassword}
+            setIsHiddenPassword={setIsHiddenPassword}
             className="text-input"
-            id="password"
+            value={password}
             type="password"
             title="Mật khẩu"
             onChange={(e) => setPassword(e.target.value.trim())}

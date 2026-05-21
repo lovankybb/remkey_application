@@ -153,7 +153,7 @@ export default function ReportDetail({
             <img src={ card.mainImage ? card.mainImage.url : defaultImage} />
             <h3>{card.question}</h3>
             <br />
-            <p>{card.answer}</p>
+            <p style={{"white-space":"pre-wrap"}}>{card.answer}</p>
             <br />
             <p>
               <strong>Language: </strong>

@@ -27,21 +27,25 @@ async function logout() {
   const url = `${BASE_URL}/api/v1/remkey/auth/logout`;
   const jwtToken = localStorage.getItem("jwtToken");
 
+  const cleanAuth = () => {
+    localStorage.removeItem("jwtToken");
+    localStorage.removeItem("roles");
+  };
   try {
-    await fetch(url, {
+     await fetch(url, {
       method: "POST",
       headers: {
         "Content-type": "application/json",
       },
       body: JSON.stringify({
-        'token': jwtToken
-      })
+        token: jwtToken,
+      }),
     });
+
+    cleanAuth();
   } catch (err) {
     console.log(err);
   }
-
-  localStorage.removeItem("jwtToken");
 }
 
 async function changePassword(currentPassword, newPassword, confirmPassword) {

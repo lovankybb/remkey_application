@@ -62,6 +62,7 @@ function CreateCard({ exitBtn, isClose }) {
     setTimeout(() => {
       setEnableSuccessPopup(false);
       setEnableDisableLayer(false);
+      exitBtn();
     }, 2600);
   }
 
